@@ -1,0 +1,69 @@
+server:
+    port: 82
+spring:
+  application:
+    name: calc-service
+  profiles:
+    include:
+    - application-${spring.profiles.active}.yaml 
+
+
+
+app:     
+  auth:
+    allowedEndPoints:
+      - /api/goldensource/occupations
+      - /api/goldensource/relationships
+      - /api/goldensource/incomesources
+      - /api/goldensource/expensecategories
+      - /api/goldensource/expensesubcategories
+      - /api/goldensource/applicationdata
+      - /api/fixedincomecalculator/calculate
+      - /api/fvcalculator/calculate
+  sql:
+    staticResources:
+      selectRelationsSql : select name,value from relationship where deleted='N'
+      selectOccupationsSql : select name,value from occupation where deleted='N'
+      selectIncomeSourcesSql : select name,value from income_source_types where deleted='N' 
+      selectExpenseCategoriesSql : select name,value from expense_categories where deleted='N'
+      selectExpenseSubCategoriesSql : select name,value,category_id from expense_sub_categories where deleted='N'
+      selectExpenseFrequenciesSql : select name,value,factor from frequencies where deleted='N'
+      selectFixedIncomeInstrumentsSql : select name,value from fixed_income where deleted='N'
+      selectInterestCalcMethodsSql : select name,value from interest_calc_methods where deleted='N'
+      selectInterestPayoutOptionsSql : select name,value from interest_payout_options where deleted='N'
+      selectInvestmentOptionsSql : select name,value from investment_mode where deleted='N'
+      selectInterestRateChangeSql: select * from interest_rate_change where deleted='N' order by start_date desc limit 1
+      selectInterestYearRateChangeSql: select * from interest_rate_change where deleted='N' and start_date > ?
+      selectPPFContributionFrequenciesSql: select * from options_list where deleted='N' and option_name='PPF_CONTRIBUTION_FREQUENCY'
+      selectPPFExtensionOptionsSql: select * from options_list where deleted='N' and option_name='PPF_EXTENSION_OPTIONS'
+      selectPPFExtensionPeriodSql: select * from options_list where deleted='N' and option_name='PPF_EXTENSION_PERIOD'
+      selectSSYDepositFrequencySql: select * from options_list where deleted='N' and option_name='SSY_DEPOSIT_FREQUENCY_OPTIONS'
+    user:
+      selectUserByIdSql : select a.*, b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from user_details a,relationship b, occupation c where a.id=? and a.deleted=? and a.active=? and a.relation = b.id and a.occupation = c.id
+      selelctAuthenticateUser : select user_id from login_details where user_name=? AND password=? AND deleted=?
+      insertTokenSql: insert into tokens(user_name,token) values (?,?)
+      selectTokenByUserName: select token from tokens where user_name=?  AND deleted=?
+      deleteTokenByUserName: delete from tokens where user_name=?
+      selectUserByUserName: select a.*, b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from user_details a,relationship b, occupation c  where a.email=?  AND a.deleted=? and a.active=? and a.relation = b.id and a.occupation = c.id
+    family:
+      selelctFamilyDetailsByUserIdSql : select a.*,b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from family_details a,relationship b, occupation c where a.user_id=? and a.deleted='N' and a.relation = b.id and a.occupation = c.id and a.is_user='N' order by a.id
+      selelctAllFamilyDetailsByUserIdSql : select a.*,b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from family_details a,relationship b, occupation c where a.user_id=? and a.deleted='N' and a.relation = b.id and a.occupation = c.id  order by a.id
+      selelctFamilyDetailsByIdSql : select a.*,b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from family_details a,relationship b, occupation c where a.id=? and a.deleted='N' and a.relation = b.id and a.occupation = c.id
+      insertFamilyDetailsSql : insert into family_details (user_id,name,email,birth_date,mobile_no,relation,occupation,is_user) values(?,?,?,?,?,?,?,?)
+      updateFamilyDetailsSql : update family_details set name=?,email=?,birth_date=?,mobile_no=?,relation=?,occupation=? where id=?
+      deleteFamilyDetailsSql : update family_details set deleted='Y' where id=?
+    income:
+      selectIncomeDetailsByUserIdSql : select a.*,b.name as income_type_text,c.name as frequency_text,c.factor, d.first_name as name from income_sources a,income_source_types b, frequencies c ,family_details d where a.user_id=? and a.deleted='N' and a.type = b.value and a.frequency = c.value and d.id=a.member_id order by a.member_id,a.id
+      selectIncomeDetailsByIdSql : select a.*,b.name as income_type_text,c.name as frequency_text,c.factor, d.first_name as name from income_sources a,income_source_types b, frequencies c ,family_details d where a.id=? and a.deleted='N' and a.type = b.id and a.frequency = c.id and d.id=a.member_id
+      insertIncomeDetailsSql : insert into income_sources (user_id,type,frequency,member_id,income,annual_income,remark) values(?,?,?,?,?,?,?)
+      updateIncomeDetailsSql : update income_sources set type=?,frequency=?,income=?,annual_income=?,remark=? where id=?
+      deleteIncomeDetailsSql : update income_sources set deleted='Y' where id=?
+      deleteIncomeDetailsByMemberIdSql : update income_sources set deleted='Y' where member_id=?
+    expense:
+      selectExpensesDetailsByUserIdSql : select a.*,b.name as category_text,c.name as sub_category_text,c.category_id as category_id,d.name as frequency_text,d.factor from expenses a, expense_categories b, expense_sub_categories c, frequencies d where a.category=b.value and a.sub_category=c.value and a.frequency=d.value and a.user_id=? and a.deleted='N'
+      selectExpensesDetailsByIdSql : select a.*,b.name as category_text,c.name as sub_category_text,c.category_id as category_id,d.name as frequency_text,d.factor from expenses a, expense_categories b, expense_sub_categories c, frequencies d where a.category=b.value and a.sub_category=c.value and a.frequency=d.value and a.id=? and a.deleted='N'
+      insertExpensesDetailsSql : insert into expenses (user_id,category,frequency,sub_category,amount,annual_amount,remark) values(?,?,?,?,?,?,?)
+      updateExpensesDetailsSql : update expenses set category=?,frequency=?,sub_category=?, amount=?,annual_amount=?,remark=? where id=?
+      deleteExpensesDetailsSql : update expenses set deleted='Y' where id=?
+      
+  
