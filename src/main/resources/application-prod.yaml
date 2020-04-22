@@ -2,11 +2,16 @@ server:
   port: 8080
 
 spring:
+  cloud:
+    gcp:
+      sql:
+        database-name: sanchay
+        instance-connection-name: sanchay-274309:asia-south1:sanchay-db
   datasource:
-   url: jdbc:mysql://google/sanchay?cloudSqlInstance=sanchay-274309:asia-south1:sanchay-db&socketFactory=com.google.cloud.sql.mysql.SocketFactory
+   #url: jdbc:mysql://google/sanchay?cloudSqlInstance=sanchay-274309:asia-south1:sanchay-db&socketFactory=com.google.cloud.sql.mysql.SocketFactory
    username: sanchay
    password: Password@1234
-   driver-class-name: com.mysql.jdbc.Driver
+   #driver-class-name: com.mysql.jdbc.Driver
    dbcp2:
     max-idle: 20
     max-wait-millis: 20000
