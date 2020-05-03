@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.planner.service</groupId>
-	<artifactId>planner-service</artifactId>
+	<artifactId>sanchay-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>planner-service</name>
+	<name>sanchay-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

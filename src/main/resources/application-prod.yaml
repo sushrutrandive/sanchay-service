@@ -22,10 +22,10 @@ eureka:
   client:
     register-with-eureka: true
     service-url:
-      defaultZone: https://sanchay-discovery-server-dot-sanchay-274309.el.r.appspot.com/eureka
+      defaultZone: http://10.140.0.2:81/eureka
 
 app:
   auth:
-    tokenCheckPointUrl: https://sanchay-uaa-dot-sanchay-274309.el.r.appspot.com/auth/validateAcccessToken
+    tokenCheckPointUrl: http://10.140.0.2:82/auth/validateAcccessToken
     tokenSecret: ZmRmNGI0YzZjZGI0ZDkxOGYyMjBlN2MzMGFlMjUyMDk1YWFjZDM3N2QwMWViNjkzNTkwMTgyYTc4MjA4ZWY0OTNkOTg3YWE5ZGVkNzJkYzQwODIyNzRhY2ZiYjVjYzQwOTFiODk4MGVkMDFhYmJmNmEwNDBjNzNkMjBjMzk2YjM
   
