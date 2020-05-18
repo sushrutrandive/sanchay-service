@@ -214,6 +214,43 @@ public class Constants {
 	   
 	   
 	}
+	
+	public enum LOAN_PREPAYMENT_FREQUENCY{
+		MONTHLY (1),
+		QUARTERLY (2),
+		SEMI_ANNUALLY (3),
+		ANNUALLY (4),
+		ONE_TIME (5);
+		
+		private final int value;
+		
+		LOAN_PREPAYMENT_FREQUENCY(int value) {
+	        this.value = value;
+	       
+	    }
+	    public int getValue(){
+	    	return this.value;
+	    }
+	    
+	    public static LOAN_PREPAYMENT_FREQUENCY fromInteger(int x) {
+	        switch(x) {
+	        case 1:
+	            return MONTHLY;
+	        case 2:
+	            return QUARTERLY;
+	        case 3:
+	            return SEMI_ANNUALLY;
+	        case 4:
+	            return ANNUALLY;
+	        case 5:
+	            return ONE_TIME;
+	      
+	        }
+	        return null;
+	    }
+	   
+	   
+	}
 	 
 	
 	

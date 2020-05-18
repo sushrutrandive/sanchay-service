@@ -57,6 +57,7 @@ public class FixedDepositCalculator implements Calculator<FixedDepositCalcInfo>{
 				start.set(Calendar.SECOND,0);
 				LocalDate startLocalDate = LocalDate.of(start.get(Calendar.YEAR), start.get(Calendar.MONTH)+1, start.get(Calendar.DATE));
 				startLocalDate = startLocalDate.plusYears(year); 
+				startLocalDate = startLocalDate.minusDays(1);
 				FDTransactionInfo fdInfo = new FDTransactionInfo(startLocalDate, amount);
 				info.addTransactionToList(fdInfo);				
 			}

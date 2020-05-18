@@ -21,16 +21,19 @@ public class DateUtil {
 			throw new RequiredParametersMissingException();
 		if(endDate.before(startDate))
 			throw new InvalidParameterException(ErrorCodes.END_DATE_BEFORE_START_DATE);
+		
 		Calendar start = Calendar.getInstance();
 		start.setTime(startDate);
 		Calendar end = Calendar.getInstance();
 		end.setTime(endDate);
 		
+		end.add(Calendar.DAY_OF_MONTH, 1);
+		
 		start.set(Calendar.HOUR_OF_DAY, 0);
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND,0);
 		
-		end.set(Calendar.HOUR_OF_DAY, 23);
+		end.set(Calendar.HOUR_OF_DAY, 00);
 		end.set(Calendar.MINUTE, 59);
 		end.set(Calendar.SECOND,59);
 		

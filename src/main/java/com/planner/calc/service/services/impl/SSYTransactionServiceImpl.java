@@ -39,6 +39,10 @@ public class SSYTransactionServiceImpl implements SSYTransactionService {
 		LocalDate startDate = DateUtil.getAprilDateForCurrentFY(30);
 		LocalDate endDate = accountOpenDate.plusYears(calcInfo.getTerms());
 		
+		if(accountOpenDate.isAfter(startDate)) {
+			startDate =accountOpenDate;
+		}
+		
 
 		List<InterestRateChangeInfo> changes = this.staticResource.getInterestRateChangeDetails(DateUtil.asDate(startDate));
 		InterestRateChangeInfo latestRate = this.staticResource.getInterestRateChange();

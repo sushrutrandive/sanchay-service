@@ -70,6 +70,7 @@ public class StaticResourceServiceImpl implements  StaticResourceService{
 		 List<NameValueInfo> ppfExtentionOptions = this.staticResource.getPPFExtensionOptions();
 		 List<NameValueInfo> ppfExtenstionPeriodOptions = this.staticResource.getPPFExtensionPeriods();
 		 List<NameValueInfo> ssyDepositFrequencyOptions = this.staticResource.getSSYDepositFrequencyOptions();
+		 List<NameValueInfo> loanPPFrequencyOptions = this.staticResource.getLoanPPFrequencyOptions();
 		 
 		 resources.setFixedIncomeInstrumentList(fixedIncomeInstruments);
 		 resources.setInterestCalcMethodList(interstCalcMethods);
@@ -80,6 +81,7 @@ public class StaticResourceServiceImpl implements  StaticResourceService{
 		 resources.setPpfExtensionOptions(ppfExtentionOptions);
 		 resources.setPpfExtensionPeriods(ppfExtenstionPeriodOptions);
 		 resources.setSsyDepositFrequncyOptions(ssyDepositFrequencyOptions);
+		 resources.setLoanPPFrequncyOptions(loanPPFrequencyOptions);
 		 return resources;
 	}
 

@@ -17,37 +17,38 @@ public class FutureValueCalcServiceImpl implements FutureValueCalcService  {
 	@Override
 	public FVCalcInfo calculate(FVCalcInfo calcInfo) {
 		
-		FV_CALC_OPTIONS FV_CALC_OPTION   = FV_CALC_OPTIONS.fromString(calcInfo.getType());
-		if(FV_CALC_OPTION == FV_CALC_OPTIONS.FV_SIP_AMT) {
-			FVCalcRequestInfo request = calcInfo.getFvCalcRequest();
-			BigDecimal presntCost = new BigDecimal(request.getPresentCost());
-			double result =FinanceLib.fv((request.getInflationRate()/100), 15, 0.0, presntCost.doubleValue()*-1D, true);
-			result =FinanceLib.fv((10.0/100), 15, 0.0, -400000, true);
-			double fv = AmountUtil.round(result, 0);
-			double [] rates = {8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0};
+		
+
+		FVCalcRequestInfo request = calcInfo.getFvCalcRequest();
+		BigDecimal presntCost = new BigDecimal(request.getPresentCost());
+		double result =FinanceLib.fv((request.getInflationRate()/100), request.getTerms(), 0.0, presntCost.doubleValue()*-1D, false);
+		//result =FinanceLib.fv((10.0/100), 15, 0.0, -400000, true);
+		double fv = AmountUtil.round(result, 0);
+		double [] rates = {8.0D,9.0D,10.0D,11.0D,12.0D,13.0D,14.0D,15.0D};
+		
+		for(double rate : rates) {
 			
-			for(double rate : rates) {
-				
-				double fvOfPresentAmt = 0;
-				if(request.getBalance()>0) {
-					fvOfPresentAmt = FinanceLib.fv((request.getInflationRate()/100), request.getTerms(), 0.0D, (request.getPresentCost()*-1), true);
-					fvOfPresentAmt = AmountUtil.round(fvOfPresentAmt, 0);
-				}
-				double fvAmt = fv - fvOfPresentAmt;
-				double lumpsump = AmountUtil.round(FinanceLib.pv((rate/100), request.getTerms(), 0, fvAmt, true),0);
-				int termsInMonth = request.getTerms()*12;
-				double sip = AmountUtil.round(FinanceLib.pmt((rate/100), termsInMonth, (request.getPresentCost()*-1), (fv*-1), true),0);
-				calcInfo.addLumpsumDetail(rate, lumpsump);
-				calcInfo.addSIPDetail(rate, sip);
-				
+			double fvOfPresentAmt = 0;
+			if(request.getBalance()>0) {
+				fvOfPresentAmt = FinanceLib.fv((rate/100), request.getTerms(), 0.0D, (request.getBalance()*-1), false);
+				fvOfPresentAmt = AmountUtil.round(fvOfPresentAmt, 0);
 			}
+			double fvAmt = fv - fvOfPresentAmt;
+			double lumpsump = AmountUtil.round(FinanceLib.pv((rate/100), request.getTerms(), 0, fvAmt, false),0);
+			int termsInMonth = request.getTerms()*12;
+			double sip = AmountUtil.round(FinanceLib.pmt((rate/1200), termsInMonth, 0, fvAmt, false),0);
+			lumpsump = lumpsump*-1D;
+			sip = sip*-1D;
+			calcInfo.addLumpsumDetail(rate, lumpsump);
+			calcInfo.addSIPDetail(rate, sip );
 			
-			
-			
-			
-			calcInfo.setFutureValue(fv);
 		}
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		calcInfo.setFutureValue(fv);
+	
 		return calcInfo;
 	}
 	

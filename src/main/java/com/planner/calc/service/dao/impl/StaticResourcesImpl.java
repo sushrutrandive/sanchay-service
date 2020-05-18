@@ -122,6 +122,12 @@ public class StaticResourcesImpl implements StaticResources {
 		// TODO Auto-generated method stub
 		return jdbcTemplate.query(this.appSql.getStaticResources().getSelectSSYDepositFrequencySql(), new NameValueRowMapper());
 	}
+	
+	@Override
+	public List<NameValueInfo> getLoanPPFrequencyOptions() {
+		// TODO Auto-generated method stub
+		return jdbcTemplate.query(this.appSql.getStaticResources().getSelectLoanPPFrequencySql(), new NameValueRowMapper());
+	}
 
 }
 

@@ -29,6 +29,7 @@ public interface StaticResources {
 	public List<NameValueInfo> getPPFExtensionPeriods();
 	
 	public List<NameValueInfo> getSSYDepositFrequencyOptions();
+	public List<NameValueInfo> getLoanPPFrequencyOptions();
 	
 
 

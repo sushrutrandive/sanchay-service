@@ -154,6 +154,11 @@ INSERT INTO options_list (option_name,name,value) values('SSY_DEPOSIT_FREQUENCY_
 INSERT INTO options_list (option_name,name,value) values('SSY_DEPOSIT_FREQUENCY_OPTIONS','Annually -Start of the financial year',3);
 INSERT INTO options_list (option_name,name,value) values('SSY_DEPOSIT_FREQUENCY_OPTIONS','Annually -End of the financial year',4);
 
+INSERT INTO options_list (option_name,name,value) values('LOAN_PP_FREQUENCY_OPTIONS','Monthly',1);
+INSERT INTO options_list (option_name,name,value) values('LOAN_PP_FREQUENCY_OPTIONS','Quarterly',2);
+INSERT INTO options_list (option_name,name,value) values('LOAN_PP_FREQUENCY_OPTIONS','Semi Annually',3);
+INSERT INTO options_list (option_name,name,value) values('LOAN_PP_FREQUENCY_OPTIONS','Annually',4);
+
 
 -- Test Data
 /*INSERT INTO user_details(first_name,last_name,email,birth_date,mobile_no) 

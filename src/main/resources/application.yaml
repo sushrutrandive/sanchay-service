@@ -20,6 +20,9 @@ app:
       - /api/goldensource/applicationdata
       - /api/fixedincomecalculator/calculate
       - /api/fvcalculator/calculate
+      - /api/investmentAmtCalculator/calculate
+      - /api/loanppcalculator/schedule
+      - /api/loanppcalculator/compare
   sql:
     staticResources:
       selectRelationsSql : select name,value from relationship where deleted='N'
@@ -38,6 +41,7 @@ app:
       selectPPFExtensionOptionsSql: select * from options_list where deleted='N' and option_name='PPF_EXTENSION_OPTIONS'
       selectPPFExtensionPeriodSql: select * from options_list where deleted='N' and option_name='PPF_EXTENSION_PERIOD'
       selectSSYDepositFrequencySql: select * from options_list where deleted='N' and option_name='SSY_DEPOSIT_FREQUENCY_OPTIONS'
+      selectLoanPPFrequencySql: select * from options_list where deleted='N' and option_name='LOAN_PP_FREQUENCY_OPTIONS'
     user:
       selectUserByIdSql : select a.*, b.id as relation,b.name as relation_text, c.id as occupation,c.name as occupation_text from user_details a,relationship b, occupation c where a.id=? and a.deleted=? and a.active=? and a.relation = b.id and a.occupation = c.id
       selelctAuthenticateUser : select user_id from login_details where user_name=? AND password=? AND deleted=?

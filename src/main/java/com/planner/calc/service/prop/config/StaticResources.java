@@ -24,7 +24,14 @@ public class StaticResources {
 	private String selectPPFExtensionPeriodSql;
 	
 	private String selectSSYDepositFrequencySql;
+	private String selectLoanPPFrequencySql;
 	
+	public String getSelectLoanPPFrequencySql() {
+		return selectLoanPPFrequencySql;
+	}
+	public void setSelectLoanPPFrequencySql(String selectLoanPPFrequencySql) {
+		this.selectLoanPPFrequencySql = selectLoanPPFrequencySql;
+	}
 	public String getSelectRelationsSql() {
 		return selectRelationsSql;
 	}

@@ -16,6 +16,7 @@ public class ApplicationStaticData {
 	private List<NameValueInfo> ppfExtensionOptions=  new ArrayList<>();
 	private List<NameValueInfo> ppfExtensionPeriods=  new ArrayList<>();
 	private List<NameValueInfo> ssyDepositFrequncyOptions=  new ArrayList<>();
+	private List<NameValueInfo> loanPPFrequncyOptions=  new ArrayList<>();
 	
 	private LocalDate currentDate;
 	
@@ -76,6 +77,12 @@ public class ApplicationStaticData {
 	}
 	public void setSsyDepositFrequncyOptions(List<NameValueInfo> ssyDepositFrequncyOptions) {
 		this.ssyDepositFrequncyOptions = ssyDepositFrequncyOptions;
+	}
+	public List<NameValueInfo> getLoanPPFrequncyOptions() {
+		return loanPPFrequncyOptions;
+	}
+	public void setLoanPPFrequncyOptions(List<NameValueInfo> loanPPFrequncyOptions) {
+		this.loanPPFrequncyOptions = loanPPFrequncyOptions;
 	}
 	
 	

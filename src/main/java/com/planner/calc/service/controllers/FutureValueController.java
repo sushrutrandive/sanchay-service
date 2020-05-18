@@ -16,7 +16,7 @@ import com.planner.calc.service.services.FutureValueCalcService;
 
 @RestController
 @RequestMapping(value = "api/fvcalculator")
-public class FutureValueCalculator {
+public class FutureValueController {
 	
 	@Autowired
 	private FutureValueCalcService futureValueCalcService;
